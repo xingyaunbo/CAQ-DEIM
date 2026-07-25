@@ -1,458 +1,695 @@
-<h2 align="center">
-  DEIM: DETR with Improved Matching for Fast Convergence
-</h2>
+<h1 align="center">CAQ-DEIM</h1>
 
 <p align="center">
-    <a href="https://github.com/ShihuaHuang95/DEIM/blob/master/LICENSE">
-        <img alt="license" src="https://img.shields.io/badge/LICENSE-Apache%202.0-blue">
-    </a>
-    <a href="https://arxiv.org/abs/2412.04234">
-        <img alt="arXiv" src="https://img.shields.io/badge/arXiv-2412.04234-red">
-    </a>
-   <a href="https://www.shihuahuang.cn/DEIM/">
-        <img alt="project webpage" src="https://img.shields.io/badge/Webpage-DEIM-purple">
-    </a>
-    <a href="https://github.com/ShihuaHuang95/DEIM/pulls">
-        <img alt="prs" src="https://img.shields.io/github/issues-pr/ShihuaHuang95/DEIM">
-    </a>
-    <a href="https://github.com/ShihuaHuang95/DEIM/issues">
-        <img alt="issues" src="https://img.shields.io/github/issues/ShihuaHuang95/DEIM?color=olive">
-    </a>
-    <a href="https://github.com/ShihuaHuang95/DEIM">
-        <img alt="stars" src="https://img.shields.io/github/stars/ShihuaHuang95/DEIM">
-    </a>
-    <a href="mailto:shihuahuang95@gmail.com">
-        <img alt="Contact Us" src="https://img.shields.io/badge/Contact-Email-yellow">
-    </a>
-</p>
-
-<p align="center" style="font-size: 2.0em; font-weight: bold;">
-    🎉 <strong> <a href="https://intellindust-ai-lab.github.io/projects/EdgeCrafter/" style="color: #d9534f; text-decoration: none;">EdgeCrafter</a> is released with SOTA performance on detection, pose estimation as well as instance segmentation.</strong>🎉
-</p>
-<p align="center" style="font-size: 2.0em; font-weight: bold;">
-    🎉 <strong>We’re excited to share <a href="https://intellindust-ai-lab.github.io/projects/DEIMv2/" style="color: #d9534f; text-decoration: none;">DEIMv2</a> </strong>🎉
-</p>
-
-
-<p align="center">
-    DEIM is an advanced training framework designed to enhance the matching mechanism in DETRs, enabling faster convergence and improved accuracy. It serves as a robust foundation for future research and applications in the field of real-time object detection. 
-</p>
-
----
-
-
-<div align="center">
-  <a href="http://www.shihuahuang.cn">Shihua Huang</a><sup>1</sup>,
-  <a href="https://scholar.google.com/citations?user=tIFWBcQAAAAJ&hl=en">Zhichao Lu</a><sup>2</sup>,
-  <a href="https://vinthony.github.io/academic/">Xiaodong Cun</a><sup>3</sup>,
-  Yongjun Yu<sup>1</sup>,
-  Xiao Zhou<sup>4</sup>, 
-  <a href="https://xishen0220.github.io">Xi Shen</a><sup>1*</sup>
-</div>
-
-  
-<p align="center">
-<i>
-1. Intellindust AI Lab &nbsp; 2. City University of Hong Kong &nbsp; 3. Great Bay University &nbsp; 4. Hefei Normal University
-</i>
+  <strong>Complexity-Aware Quality-Guided End-to-End Pig Detection in Complex Pig-Barn Environments</strong>
 </p>
 
 <p align="center">
-  **📧 Corresponding author:** <a href="mailto:shenxiluc@gmail.com">shenxiluc@gmail.com</a>
+  <a href="https://github.com/xingyaunbo/CAQ-DEIM/blob/main/LICENSE">
+    <img alt="license" src="https://img.shields.io/badge/License-Apache%202.0-blue">
+  </a>
+  <a href="https://github.com/xingyaunbo/CAQ-DEIM/issues">
+    <img alt="issues" src="https://img.shields.io/github/issues/xingyaunbo/CAQ-DEIM">
+  </a>
+  <a href="https://github.com/xingyaunbo/CAQ-DEIM/stargazers">
+    <img alt="stars" src="https://img.shields.io/github/stars/xingyaunbo/CAQ-DEIM">
+  </a>
 </p>
 
 <p align="center">
-    <a href="https://paperswithcode.com/sota/real-time-object-detection-on-coco?p=deim-detr-with-improved-matching-for-fast">
-    <img alt="sota" src="https://img.shields.io/endpoint.svg?url=https://paperswithcode.com/badge/deim-detr-with-improved-matching-for-fast/real-time-object-detection-on-coco">
-    </a>
+CAQ-DEIM is an NMS-free end-to-end pig detector developed for dense, overlapping, and boundary-ambiguous group-housed pig-barn scenes.
 </p>
 
-<p align="center">
-<strong>If you like our work, please give us a ⭐!</strong>
-</p>
+Repository status: The manuscript is being prepared for submission.Author information, paper DOI, released checkpoints, and the permanent archive DOI will be added when available.
 
+1. Introduction
 
-<p align="center">
-  <img src="./figures/teaser_a.png" alt="Image 1" width="49%">
-  <img src="./figures/teaser_b.png" alt="Image 2" width="49%">
-</p>
+Pig images collected in commercial group-housed barns often contain densely distributed targets, mutual occlusion, close physical contact, blurred boundaries, low visibility, nighttime infrared scenes, lens contamination, and motion blur. These conditions can cause boundary ambiguity, missed detections, and inaccurate bounding-box localization.
 
-</details>
+CAQ-DEIM is built on the DEIM end-to-end detection framework and improves the baseline from three complementary perspectives:
 
- 
-  
-## 🚀 Updates
-- [x] **\[2025.09.26\]** **DEIMv2** is now available with the [project page](https://intellindust-ai-lab.github.io/projects/DEIMv2/) and [release code](https://github.com/Intellindust-AI-Lab/DEIMv2). The series covers eight model sizes, from **X** down to **Atto**. For the **S, M, L, and X** variants, we leverage DINOv3 features (distilled or pretrained). **DEIMv2** achieves higher performance with fewer parameters and FLOPs.
-- [x] **\[2025.06.24\]** DEIMv2 is coming soon: our next-gen detection series, along with three ultra-light variants: Pico (1.5M), Femto (0.96M), and Atto (0.49M), all delivering SoTA performance. Atto, in particular, is tailored for mobile devices, achieving 23.8 AP on COCO at 320×320 resolution.
-- [x] **\[2025.03.12\]** The Object365 Pretrained [DEIM-D-FINE-X](https://drive.google.com/file/d/1RMNrHh3bYN0FfT5ZlWhXtQxkG23xb2xj/view?usp=drive_link) model is released, which achieves 59.5% AP after fine-tuning 24 COCO epochs.
-- [x] **\[2025.03.05\]** The Nano DEIM model is released.
-- [x] **\[2025.02.27\]** The DEIM paper is accepted to CVPR 2025. Thanks to all co-authors.
-- [x] **\[2024.12.26\]** A more efficient implementation of Dense O2O, achieving nearly a 30% improvement in loading speed (See [the pull request](https://github.com/ShihuaHuang95/DEIM/pull/13) for more details). Huge thanks to my colleague [Longfei Liu](https://github.com/capsule2077).
-- [x] **\[2024.12.03\]** Release DEIM series. Besides, this repo also supports the re-implmentations of [D-FINE](https://arxiv.org/abs/2410.13842) and [RT-DETR](https://arxiv.org/abs/2407.17140).
+CA-DOS: Complexity-Aware Dense O2O Sampling;
 
-## Table of Content
-* [1. Model Zoo](https://github.com/ShihuaHuang95/DEIM?tab=readme-ov-file#1-model-zoo)
-* [2. Quick start](https://github.com/ShihuaHuang95/DEIM?tab=readme-ov-file#2-quick-start)
-* [3. Usage](https://github.com/ShihuaHuang95/DEIM?tab=readme-ov-file#3-usage)
-* [4. Tools](https://github.com/ShihuaHuang95/DEIM?tab=readme-ov-file#4-tools)
-* [5. Citation](https://github.com/ShihuaHuang95/DEIM?tab=readme-ov-file#5-citation)
-* [6. Acknowledgement](https://github.com/ShihuaHuang95/DEIM?tab=readme-ov-file#6-acknowledgement)
-  
-  
-## 1. Model Zoo
+BCFE: Boundary-Context Feature Enhancement;
 
-### DEIM-D-FINE
-| Model | Dataset | AP<sup>D-FINE</sup> | AP<sup>DEIM</sup> | #Params | Latency | GFLOPs | config | checkpoint
-| :---: | :---: | :---: | :---: |  :---: | :---: | :---: | :---: | :---: 
-**N** | COCO | **42.8** | **43.0** | 4M | 2.12ms | 7 | [yml](./configs/deim_dfine/deim_hgnetv2_n_coco.yml) | [ckpt](https://drive.google.com/file/d/1ZPEhiU9nhW4M5jLnYOFwTSLQC1Ugf62e/view?usp=sharing) |
-**S** | COCO | **48.7** | **49.0** | 10M | 3.49ms | 25 | [yml](./configs/deim_dfine/deim_hgnetv2_s_coco.yml) | [ckpt](https://drive.google.com/file/d/1tB8gVJNrfb6dhFvoHJECKOF5VpkthhfC/view?usp=drive_link) |
-**M** | COCO | **52.3** | **52.7** | 19M | 5.62ms | 57 | [yml](./configs/deim_dfine/deim_hgnetv2_m_coco.yml) | [ckpt](https://drive.google.com/file/d/18Lj2a6UN6k_n_UzqnJyiaiLGpDzQQit8/view?usp=drive_link) |
-**L** | COCO | **54.0** | **54.7** | 31M | 8.07ms | 91 | [yml](./configs/deim_dfine/deim_hgnetv2_l_coco.yml) | [ckpt](https://drive.google.com/file/d/1PIRf02XkrA2xAD3wEiKE2FaamZgSGTAr/view?usp=drive_link) | 
-**X** | COCO | **55.8** | **56.5** | 62M | 12.89ms | 202 | [yml](./configs/deim_dfine/deim_hgnetv2_x_coco.yml) | [ckpt](https://drive.google.com/file/d/1dPtbgtGgq1Oa7k_LgH1GXPelg1IVeu0j/view?usp=drive_link) | 
+HQ-MAL: High-Quality Matchability-Aware Loss.
 
+The method focuses primarily on improving localization quality at stricter IoU thresholds while retaining the NMS-free DEIM inference pipeline.
 
-### DEIM-RT-DETRv2
-| Model | Dataset | AP<sup>RT-DETRv2</sup> | AP<sup>DEIM</sup> | #Params | Latency | GFLOPs | config | checkpoint
-| :---: | :---: | :---: | :---: |  :---: | :---: | :---: | :---: | :---: 
-**S** | COCO | **47.9** | **49.0** | 20M | 4.59ms | 60 | [yml](./configs/deim_rtdetrv2/deim_r18vd_120e_coco.yml) | [ckpt](https://drive.google.com/file/d/153_JKff6EpFgiLKaqkJsoDcLal_0ux_F/view?usp=drive_link) | 
-**M** | COCO | **49.9** | **50.9** | 31M | 6.40ms | 92 | [yml](./configs/deim_rtdetrv2/deim_r34vd_120e_coco.yml) | [ckpt](https://drive.google.com/file/d/1O9RjZF6kdFWGv1Etn1Toml4r-YfdMDMM/view?usp=drive_link) | 
-**M*** | COCO | **51.9** | **53.2** | 33M | 6.90ms | 100 | [yml](./configs/deim_rtdetrv2/deim_r50vd_m_60e_coco.yml) | [ckpt](https://drive.google.com/file/d/10dLuqdBZ6H5ip9BbBiE6S7ZcmHkRbD0E/view?usp=drive_link) | 
-**L** | COCO | **53.4** | **54.3** | 42M | 9.15ms | 136 | [yml](./configs/deim_rtdetrv2/deim_r50vd_60e_coco.yml) | [ckpt](https://drive.google.com/file/d/1mWknAXD5JYknUQ94WCEvPfXz13jcNOTI/view?usp=drive_link) | 
-**X** | COCO | **54.3** | **55.5** | 76M | 13.66ms | 259 | [yml](./configs/deim_rtdetrv2/deim_r101vd_60e_coco.yml) | [ckpt](https://drive.google.com/file/d/1BIevZijOcBO17llTyDX32F_pYppBfnzu/view?usp=drive_link) | 
+2. Method
 
+2.1 CA-DOS
 
-## 2. Quick start
+CA-DOS computes an image-level complexity score using target density and inter-box overlap:
 
-### Setup
+S_i = alpha * Norm(n_i) + beta * m_i + gamma * Norm(p_i)
 
-```shell
-conda create -n deim python=3.11.9
-conda activate deim
-pip install -r requirements.txt
-```
+where:
 
+n_i is the number of ground-truth boxes;
 
-### Data Preparation
+m_i is the maximum pairwise IoU between ground-truth boxes;
 
-<details>
-<summary> COCO2017 Dataset </summary>
+p_i is the number of overlapping box pairs;
 
-1. Download COCO2017 from [OpenDataLab](https://opendatalab.com/OpenDataLab/COCO_2017) or [COCO](https://cocodataset.org/#download).
-1. Modify paths in [coco_detection.yml](./configs/dataset/coco_detection.yml)
+Norm(.) denotes min-max normalization.
 
-    ```yaml
-    train_dataloader:
-        img_folder: /data/COCO2017/train2017/
-        ann_file: /data/COCO2017/annotations/instances_train2017.json
-    val_dataloader:
-        img_folder: /data/COCO2017/val2017/
-        ann_file: /data/COCO2017/annotations/instances_val2017.json
-    ```
+Final settings:
 
-</details>
+Parameter
 
-<details>
-<summary>Custom Dataset</summary>
+Value
 
-To train on your custom dataset, you need to organize it in the COCO format. Follow the steps below to prepare your dataset:
+alpha
 
-1. **Set `remap_mscoco_category` to `False`:**
+0.35
 
-    This prevents the automatic remapping of category IDs to match the MSCOCO categories.
+beta
 
-    ```yaml
-    remap_mscoco_category: False
-    ```
+0.45
 
-2. **Organize Images:**
+gamma
 
-    Structure your dataset directories as follows:
+0.20
 
-    ```shell
-    dataset/
-    ├── images/
-    │   ├── train/
-    │   │   ├── image1.jpg
-    │   │   ├── image2.jpg
-    │   │   └── ...
-    │   ├── val/
-    │   │   ├── image1.jpg
-    │   │   ├── image2.jpg
-    │   │   └── ...
+High-complexity threshold
+
+0.45
+
+Medium-complexity threshold
+
+0.25
+
+High-complexity sampling probability
+
+0.70
+
+Medium-complexity sampling probability
+
+0.35
+
+Overlap-pair IoU threshold
+
+0.10
+
+CA-DOS changes only the selection of Mosaic auxiliary images during training. It does not modify Hungarian matching, the model architecture, or the inference pipeline, and therefore adds no inference cost.
+
+2.2 BCFE
+
+BCFE is inserted after channel projection of HGNetv2 features and before the Hybrid Encoder. It is applied to the P3 and P4 feature paths.
+
+The module contains four parallel branches:
+
+local texture extraction;
+
+directional structure modeling;
+
+contextual perception;
+
+spatial boundary gating.
+
+The branch outputs are concatenated and fused, followed by a residual connection with a learnable scaling parameter initialized to 0.1.
+
+2.3 HQ-MAL
+
+The original MAL quality target is:
+
+t_i = q_i^gamma
+
+HQ-MAL selectively compensates high-quality matched predictions:
+
+t_i_HQ = q_i^gamma + eta * (q_i - q_i^gamma),  if q_i >= tau
+t_i_HQ = q_i^gamma,                            otherwise
+
+Final settings:
+
+Parameter
+
+Value
+
+Quality modulation factor gamma
+
+1.5
+
+High-quality threshold tau
+
+0.55
+
+Compensation coefficient eta
+
+0.25
+
+CAQ-DEIM does not explicitly model pig-to-pig occlusion relationships. Instead, its three components improve difficult-sample exposure, boundary-context representation, and confidence-localization consistency.
+
+3. Results
+
+3.1 PigDetect test set
+
+Method
+
+AP
+
+AP75
+
+Parameters (M)
+
+GFLOPs
+
+DEIM
+
+0.752
+
+0.853
+
+3.723
+
+15.092
+
+CAQ-DEIM
+
+0.775
+
+0.884
+
+4.688
+
+17.965
+
+Improvement
+
++0.023
+
++0.031
+
++0.965
+
++2.873
+
+CAQ-DEIM improves AP by 2.3 percentage points and AP75 by 3.1 percentage points over the original DEIM baseline.
+
+3.2 Ablation study
+
+Method
+
+CA-DOS
+
+BCFE
+
+HQ-MAL
+
+AP
+
+AP75
+
+DEIM
+
+-
+
+-
+
+-
+
+0.752
+
+0.853
+
+DEIM + CA-DOS
+
+✓
+
+-
+
+-
+
+0.765
+
+0.871
+
+DEIM + BCFE
+
+-
+
+✓
+
+-
+
+0.763
+
+0.875
+
+DEIM + CA-DOS + BCFE
+
+✓
+
+✓
+
+-
+
+0.769
+
+0.872
+
+CAQ-DEIM
+
+✓
+
+✓
+
+✓
+
+0.775
+
+0.884
+
+3.3 Complexity-subset evaluation
+
+Complexity
+
+DEIM AP
+
+CAQ-DEIM AP
+
+Delta AP
+
+DEIM AP75
+
+CAQ-DEIM AP75
+
+Delta AP75
+
+Full
+
+0.752
+
+0.775
+
++0.023
+
+0.853
+
+0.884
+
++0.031
+
+Low
+
+0.776
+
+0.794
+
++0.018
+
+0.886
+
+0.902
+
++0.016
+
+Medium
+
+0.741
+
+0.770
+
++0.029
+
+0.859
+
+0.890
+
++0.031
+
+High
+
+0.738
+
+0.758
+
++0.020
+
+0.831
+
+0.864
+
++0.033
+
+3.4 External evaluation
+
+Dataset
+
+Images
+
+DEIM AP
+
+CAQ-DEIM AP
+
+DEIM AP75
+
+CAQ-DEIM AP75
+
+External Dataset 1
+
+276
+
+0.782
+
+0.808
+
+0.854
+
+0.859
+
+External Dataset 2
+
+400
+
+0.768
+
+0.791
+
+0.868
+
+0.882
+
+The external evaluation sets were used exclusively for final testing and were not used for training, validation-based model selection, parameter tuning, or model-structure design.
+
+4. Dataset
+
+CAQ-DEIM is evaluated on the public PigDetect object-detection subset of the PigBench benchmark.
+
+Split
+
+Images
+
+Bounding boxes
+
+Pen environments
+
+Train
+
+2,431
+
+33,197
+
+30
+
+Validation
+
+250
+
+3,544
+
+30
+
+Test
+
+250
+
+5,436
+
+1 independent pen
+
+Total
+
+2,931
+
+42,177
+
+31
+
+The training and validation sets contain images from 30 pen environments. The official test set comes from one independent pen environment that is absent from both training and validation.
+
+Dataset DOI:
+
+https://doi.org/10.25625/I6UYE9
+
+The dataset is not redistributed in this repository. Please follow the access conditions and license specified by the original data provider.
+
+Expected COCO-style structure:
+
+datasets/
+└── PigDetect/
+    ├── train/
+    ├── val/
+    ├── test/
     └── annotations/
         ├── instances_train.json
         ├── instances_val.json
-        └── ...
-    ```
+        └── instances_test.json
 
-    - **`images/train/`**: Contains all training images.
-    - **`images/val/`**: Contains all validation images.
-    - **`annotations/`**: Contains COCO-formatted annotation files.
+5. Installation
 
-3. **Convert Annotations to COCO Format:**
+The manuscript experiments used:
 
-    If your annotations are not already in COCO format, you'll need to convert them. You can use the following Python script as a reference or utilize existing tools:
+Component
 
-    ```python
-    import json
+Version
 
-    def convert_to_coco(input_annotations, output_annotations):
-        # Implement conversion logic here
-        pass
+Operating system
 
-    if __name__ == "__main__":
-        convert_to_coco('path/to/your_annotations.json', 'dataset/annotations/instances_train.json')
-    ```
+Windows 11
 
-4. **Update Configuration Files:**
+GPU
 
-    Modify your [custom_detection.yml](./configs/dataset/custom_detection.yml).
+NVIDIA GeForce RTX 5060
 
-    ```yaml
-    task: detection
+CUDA
 
-    evaluator:
-      type: CocoEvaluator
-      iou_types: ['bbox', ]
+12.8
 
-    num_classes: 777 # your dataset classes
-    remap_mscoco_category: False
+Python
 
-    train_dataloader:
-      type: DataLoader
-      dataset:
-        type: CocoDetection
-        img_folder: /data/yourdataset/train
-        ann_file: /data/yourdataset/train/train.json
-        return_masks: False
-        transforms:
-          type: Compose
-          ops: ~
-      shuffle: True
-      num_workers: 4
-      drop_last: True
-      collate_fn:
-        type: BatchImageCollateFunction
+3.10.20
 
-    val_dataloader:
-      type: DataLoader
-      dataset:
-        type: CocoDetection
-        img_folder: /data/yourdataset/val
-        ann_file: /data/yourdataset/val/ann.json
-        return_masks: False
-        transforms:
-          type: Compose
-          ops: ~
-      shuffle: False
-      num_workers: 4
-      drop_last: False
-      collate_fn:
-        type: BatchImageCollateFunction
-    ```
+PyTorch
 
-</details>
+2.11.0
 
+Torchvision
 
-## 3. Usage
-<details open>
-<summary> COCO2017 </summary>
+0.26.0
 
-1. Training
-```shell
-CUDA_VISIBLE_DEVICES=0,1,2,3 torchrun --master_port=7777 --nproc_per_node=4 train.py -c configs/deim_dfine/deim_hgnetv2_${model}_coco.yml --use-amp --seed=0
-```
+Ultralytics
 
-<!-- <summary>2. Testing </summary> -->
-2. Testing
-```shell
-CUDA_VISIBLE_DEVICES=0,1,2,3 torchrun --master_port=7777 --nproc_per_node=4 train.py -c configs/deim_dfine/deim_hgnetv2_${model}_coco.yml --test-only -r model.pth
-```
+8.4.34
 
-<!-- <summary>3. Tuning </summary> -->
-3. Tuning
-```shell
-CUDA_VISIBLE_DEVICES=0,1,2,3 torchrun --master_port=7777 --nproc_per_node=4 train.py -c configs/deim_dfine/deim_hgnetv2_${model}_coco.yml --use-amp --seed=0 -t model.pth
-```
-</details>
+Create the environment:
 
-<details>
-<summary> Customizing Batch Size </summary>
+conda create -n caq-deim python=3.10.20 -y
+conda activate caq-deim
+pip install -r requirements.txt
 
-For example, if you want to double the total batch size when training D-FINE-L on COCO2017, here are the steps you should follow:
+Check PyTorch and CUDA:
 
-1. **Modify your [dataloader.yml](./configs/base/dataloader.yml)** to increase the `total_batch_size`:
+python -c "import torch; print(torch.__version__); print(torch.cuda.is_available()); print(torch.version.cuda)"
 
-    ```yaml
-    train_dataloader:
-        total_batch_size: 64  # Previously it was 32, now doubled
-    ```
+6. Configuration
 
-2. **Modify your [deim_hgnetv2_l_coco.yml](./configs/deim_dfine/deim_hgnetv2_l_coco.yml)**. Here’s how the key parameters should be adjusted:
+Update the dataset paths in the corresponding YAML file:
 
-    ```yaml
-    optimizer:
-    type: AdamW
-    params:
-        -
-        params: '^(?=.*backbone)(?!.*norm|bn).*$'
-        lr: 0.000025  # doubled, linear scaling law
-        -
-        params: '^(?=.*(?:encoder|decoder))(?=.*(?:norm|bn)).*$'
-        weight_decay: 0.
+num_classes: 1
+remap_mscoco_category: false
 
-    lr: 0.0005  # doubled, linear scaling law
-    betas: [0.9, 0.999]
-    weight_decay: 0.0001  # need a grid search
+train_dataloader:
+  dataset:
+    img_folder: datasets/PigDetect/train
+    ann_file: datasets/PigDetect/annotations/instances_train.json
 
-    ema:  # added EMA settings
-        decay: 0.9998  # adjusted by 1 - (1 - decay) * 2
-        warmups: 500  # halved
+val_dataloader:
+  dataset:
+    img_folder: datasets/PigDetect/val
+    ann_file: datasets/PigDetect/annotations/instances_val.json
 
-    lr_warmup_scheduler:
-        warmup_duration: 250  # halved
-    ```
+Main settings used in the manuscript:
 
-</details>
+Setting
 
+Value
 
-<details>
-<summary> Customizing Input Size </summary>
+Epochs
 
-If you'd like to train **DEIM** on COCO2017 with an input size of 320x320, follow these steps:
+160
 
-1. **Modify your [dataloader.yml](./configs/base/dataloader.yml)**:
+Input resolution
 
-    ```yaml
+960 x 960
 
-    train_dataloader:
-    dataset:
-        transforms:
-            ops:
-                - {type: Resize, size: [320, 320], }
-    collate_fn:
-        base_size: 320
-    dataset:
-        transforms:
-            ops:
-                - {type: Resize, size: [320, 320], }
-    ```
+Batch size
 
-2. **Modify your [dfine_hgnetv2.yml](./configs/base/dfine_hgnetv2.yml)**:
+8
 
-    ```yaml
-    eval_spatial_size: [320, 320]
-    ```
+Initial learning rate
 
-</details>
+0.0004
 
-## 4. Tools
-<details>
-<summary> Deployment </summary>
+Weight decay
 
-<!-- <summary>4. Export onnx </summary> -->
-1. Setup
-```shell
-pip install onnx onnxsim
-```
+0.0001
 
-2. Export onnx
-```shell
-python tools/deployment/export_onnx.py --check -c configs/deim_dfine/deim_hgnetv2_${model}_coco.yml -r model.pth
-```
+Scheduler
 
-3. Export [tensorrt](https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html)
-```shell
-trtexec --onnx="model.onnx" --saveEngine="model.engine" --fp16
-```
+FlatCosine
 
-</details>
+Initialization
 
-<details>
-<summary> Inference (Visualization) </summary>
+Official pretrained weights
 
+The configuration filenames below are examples. Replace them with the actual filenames in this repository.
 
-1. Setup
-```shell
-pip install -r tools/inference/requirements.txt
-```
+7. Training
 
+Train the DEIM baseline:
 
-<!-- <summary>5. Inference </summary> -->
-2. Inference (onnxruntime / tensorrt / torch)
+python train.py -c configs/deim_dfine/deim_hgnetv2_n_pigdetect.yml --use-amp --seed=0
 
-Inference on images and videos is now supported.
-```shell
-python tools/inference/onnx_inf.py --onnx model.onnx --input image.jpg  # video.mp4
-python tools/inference/trt_inf.py --trt model.engine --input image.jpg
-python tools/inference/torch_inf.py -c configs/deim_dfine/deim_hgnetv2_${model}_coco.yml -r model.pth --input image.jpg --device cuda:0
-```
-</details>
+Train CAQ-DEIM:
 
-<details>
-<summary> Benchmark </summary>
+python train.py -c configs/caq_deim/caq_deim_hgnetv2_n_pigdetect.yml --use-amp --seed=0
 
-1. Setup
-```shell
-pip install -r tools/benchmark/requirements.txt
-```
+Windows PowerShell:
 
-<!-- <summary>6. Benchmark </summary> -->
-2. Model FLOPs, MACs, and Params
-```shell
-python tools/benchmark/get_info.py -c configs/deim_dfine/deim_hgnetv2_${model}_coco.yml
-```
+python train.py `
+  -c configs/caq_deim/caq_deim_hgnetv2_n_pigdetect.yml `
+  --use-amp `
+  --seed=0
 
-2. TensorRT Latency
-```shell
-python tools/benchmark/trt_benchmark.py --COCO_dir path/to/COCO2017 --engine_dir model.engine
-```
-</details>
+8. Evaluation
 
-<details>
-<summary> Fiftyone Visualization  </summary>
+python train.py   -c configs/caq_deim/caq_deim_hgnetv2_n_pigdetect.yml   --test-only   -r path/to/checkpoint.pth
 
-1. Setup
-```shell
-pip install fiftyone
-```
-4. Voxel51 Fiftyone Visualization ([fiftyone](https://github.com/voxel51/fiftyone))
-```shell
-python tools/visualization/fiftyone_vis.py -c configs/deim_dfine/deim_hgnetv2_${model}_coco.yml -r model.pth
-```
-</details>
+Windows PowerShell:
 
-<details>
-<summary> Others </summary>
+python train.py `
+  -c configs/caq_deim/caq_deim_hgnetv2_n_pigdetect.yml `
+  --test-only `
+  -r path/to/checkpoint.pth
 
-1. Auto Resume Training
-```shell
-bash reference/safe_training.sh
-```
+Reported metrics follow the COCO protocol:
 
-2. Converting Model Weights
-```shell
-python reference/convert_weight.py model.pth
-```
-</details>
+AP: mean AP over IoU thresholds from 0.50 to 0.95;
 
+AP50: AP at IoU = 0.50;
 
-## 5. Citation
-If you use `DEIM` or its methods in your work, please cite the following BibTeX entries:
-<details open>
-<summary> bibtex </summary>
+AP75: AP at IoU = 0.75;
 
-```latex
-@misc{huang2024deim,
-      title={DEIM: DETR with Improved Matching for Fast Convergence},
-      author={Shihua, Huang and Zhichao, Lu and Xiaodong, Cun and Yongjun, Yu and Xiao, Zhou and Xi, Shen},
-      booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-      year={2025},
+AR: average recall.
+
+9. Inference and Model Complexity
+
+Torch inference:
+
+python tools/inference/torch_inf.py   -c configs/caq_deim/caq_deim_hgnetv2_n_pigdetect.yml   -r path/to/checkpoint.pth   --input path/to/image_or_video   --device cuda:0
+
+Calculate parameters and GFLOPs:
+
+python tools/benchmark/get_info.py   -c configs/caq_deim/caq_deim_hgnetv2_n_pigdetect.yml
+
+Final reported model complexity:
+
+Parameters: 4.688 M
+GFLOPs:     17.965
+Input size: 960 x 960
+
+FPS is not reported in the manuscript because a standardized reproducible inference-speed benchmark was not conducted.
+
+10. Checkpoints and Reproducibility
+
+Model weights should be released through GitHub Releases, Zenodo, Figshare, or an institutional repository rather than committed directly to the Git repository.
+
+Model
+
+Dataset
+
+AP
+
+AP75
+
+Checkpoint
+
+DEIM baseline
+
+PigDetect
+
+0.752
+
+0.853
+
+To be released
+
+CAQ-DEIM
+
+PigDetect
+
+0.775
+
+0.884
+
+To be released
+
+For reproducibility, the repository should include:
+
+CA-DOS complexity-score generation and sampling code;
+
+BCFE implementation;
+
+HQ-MAL implementation;
+
+complete YAML configurations;
+
+training and testing commands;
+
+random seed settings;
+
+evaluation scripts;
+
+external frame manifests and annotation metadata where redistribution is permitted.
+
+11. Citation
+
+The CAQ-DEIM manuscript has not yet received final bibliographic information. Replace the placeholders below after publication:
+
+@article{caqdeim2026,
+  title   = {CAQ-DEIM: Complexity-Aware Quality-Guided End-to-End Pig Detection in Complex Pig-Barn Environments},
+  author  = {[Author names]},
+  journal = {[Journal name]},
+  year    = {2026},
+  volume  = {[Volume]},
+  number  = {[Issue]},
+  pages   = {[Article number]},
+  doi     = {[DOI]}
 }
-```
-</details>
 
-## 6. Acknowledgement
-Our work is built upon [D-FINE](https://github.com/Peterande/D-FINE) and [RT-DETR](https://github.com/lyuwenyu/RT-DETR).
+Please also cite the original DEIM paper:
 
-✨ Feel free to contribute and reach out if you have any questions! ✨
+@inproceedings{huang2025deim,
+  title     = {DEIM: DETR with Improved Matching for Fast Convergence},
+  author    = {Huang, Shihua and Lu, Zhichao and Cun, Xiaodong and Yu, Yongjun and Zhou, Xiao and Shen, Xi},
+  booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year      = {2025}
+}
+
+12. License
+
+This repository is derived from the open-source DEIM framework. Please retain all applicable upstream copyright and license notices.
+
+See LICENSE for details.
+
+13. Acknowledgements
+
+This work is built on:
+
+DEIM
+
+D-FINE
+
+RT-DETR
+
+We thank the authors and maintainers of these projects and the providers of the public pig-barn datasets used in this research.
+
+14. Contact
+
+For implementation and reproduction questions, please open an issue:
+
+https://github.com/xingyaunbo/CAQ-DEIM/issues
+
+Author and corresponding-author contact information will be added after the manuscript metadata are finalized.
