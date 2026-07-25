@@ -1,0 +1,61 @@
+train_dataloader:
+  dataset:
+    transforms:
+      type: Compose
+      ops:
+        - type: Mosaic
+          output_size: 480
+          rotation_range: 5
+          translation_range: [0.5, 0.08]
+          scaling_range: [0.65, 1.35]
+          probability: 1.0
+          fill_value: 0
+          use_cache: False
+          max_cached_images: 50
+          random_pop: True
+
+          # Occlusion-aware sampling
+          score_file: C:/Users/26930/Desktop/DEIM-main/datasets/visdrone/annotations/train_occlusion_score.json
+          high_thr: 0.45
+          mid_thr: 0.25
+          high_prob: 0.55
+          mid_prob: 0.35
+
+        - {type: RandomPhotometricDistort, p: 0.5}
+        - {type: RandomZoomOut, fill: 0}
+        - {type: RandomIoUCrop, p: 0.8}
+        - {type: SanitizeBoundingBoxes, min_size: 1}
+        - {type: RandomHorizontalFlip}
+        - {type: Resize, size: [960, 960]}
+        - {type: SanitizeBoundingBoxes, min_size: 1}
+        - {type: ConvertPILImage, dtype: 'float32', scale: True}
+        - {type: ConvertBoxes, fmt: 'cxcywh', normalize: True}
+
+      policy:
+        name: stop_epoch
+        epoch: [4, 78, 148]
+        ops: ['Mosaic', 'RandomPhotometricDistort', 'RandomZoomOut', 'RandomIoUCrop']
+
+
+
+  collate_fn:
+    mixup_prob: 0.5
+    mixup_epochs: [4, 110]
+    stop_epoch: 110
+
+# Unfreezing BN
+HGNetv2:
+  freeze_at: -1         # 0 default
+  freeze_norm: False    # True default
+
+# Activation
+DFINETransformer:
+  activation: silu
+  mlp_act: silu
+
+## Our LR-Scheduler
+lrsheduler: flatcosine
+lr_gamma: 0.5
+warmup_iter: 2000
+flat_epoch: 29    # 4 + epoch // 2, e.g., 40 = 4 + 72 / 2
+no_aug_epoch: 50

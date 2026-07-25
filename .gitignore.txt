@@ -1,0 +1,33 @@
+# 数据集和图片（非常大，千万别传！）
+dataset/
+data/
+images/
+labels/
+*.jpg
+*.jpeg
+*.png
+*.mp4
+*.avi
+
+# 训练好的权重文件（也很大）
+*.pt
+*.pth
+*.h5
+*.pb
+*.onnx
+weights/
+runs/
+checkpoints/
+
+# Python 缓存和虚拟环境
+__pycache__/
+*.pyc
+venv/
+env/
+.venv/
+*.so
+
+# 环境变量和IDE配置
+.env
+.idea/
+.vscode/

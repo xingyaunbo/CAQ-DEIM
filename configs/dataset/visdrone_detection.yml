@@ -1,0 +1,41 @@
+task: detection
+
+evaluator:
+  type: CocoEvaluator
+  iou_types: ['bbox', ]
+
+num_classes: 1
+remap_mscoco_category: False
+
+train_dataloader:
+  type: DataLoader
+  dataset:
+    type: CocoDetection
+    img_folder: C:/Users/26930/Desktop/DEIM-main/datasets/visdrone/train
+    ann_file: C:/Users/26930/Desktop/DEIM-main/datasets/visdrone/annotations/train.json
+    return_masks: False
+    transforms:
+      type: Compose
+      ops: ~
+  shuffle: True
+  num_workers: 0
+  drop_last: True
+  collate_fn:
+    type: BatchImageCollateFunction
+
+
+val_dataloader:
+  type: DataLoader
+  dataset:
+    type: CocoDetection
+    img_folder: C:/Users/26930/Desktop/DEIM-main/datasets/visdrone/val
+    ann_file: C:/Users/26930/Desktop/DEIM-main/datasets/visdrone/annotations/val.json
+    return_masks: False
+    transforms:
+      type: Compose
+      ops: ~
+  shuffle: False
+  num_workers: 0
+  drop_last: False
+  collate_fn:
+    type: BatchImageCollateFunction

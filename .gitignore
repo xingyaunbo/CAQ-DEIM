@@ -1,0 +1,71 @@
+﻿# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+conda_env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Environment and secrets
+.env
+.env.*
+*.pem
+*.key
+credentials.json
+
+# Datasets
+datasets/
+dataset_cache/
+coco/
+PigDetect/
+
+# Model weights and exported models
+weight/
+weights/
+checkpoints/
+pretrained/
+*.pth
+*.pt
+*.ckpt
+*.onnx
+*.engine
+*.trt
+*.rknn
+
+# Training outputs
+output/
+outputs/
+deim_outputs/
+runs/
+wandb/
+logs/
+tensorboard/
+visualization_results/
+predictions/
+
+# Temporary and packaged files
+*.tmp
+*.temp
+*.log
+*.zip
+*.rar
+*.7z
+*.tar
+*.tar.gz
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
